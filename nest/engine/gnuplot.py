@@ -1,12 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-only
-# Copyright (c) 2019-2020 NITK Surathkal
+# Copyright (c) 2019-2025 NITK Surathkal
+
 
 """To execute gnuplot commands within the engine"""
 import os
 import subprocess
 
 
-def build_gnuplot(directory, path_plt, pltline):
+
+def build_gnuplot(directory, path_plt, plt_script):
+
     """
     Executes the gnuplot command with the given script.
 
@@ -19,6 +22,7 @@ def build_gnuplot(directory, path_plt, pltline):
         The directory where the gnuplot script will be created.
     path_plt : str
         The name of the gnuplot script file (e.g., "plot_script.plt").
+
     pltline : str
         The gnuplot commands to be written into the script file.
 
@@ -29,14 +33,16 @@ def build_gnuplot(directory, path_plt, pltline):
 
     """
 
-    plot_path = os.path.join(directory, path_plt)
 
     if not os.path.isdir(directory):
         raise FileNotFoundError(f"Directory not found: {directory}")
 
+    plot_path = os.path.join(directory, path_plt)
+
     try:
         with open(plot_path, "w") as pltfile:
-            pltfile.write(pltline)
+            pltfile.write(plt_script)
+
 
         # To execute gnuplot command via gnuplot script
         subprocess.run(["gnuplot", plot_path], check=True)

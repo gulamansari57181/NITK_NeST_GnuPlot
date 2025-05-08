@@ -67,7 +67,7 @@ def mix_plot(title, data, labels, with_sum=False):
         fig of plot
     """
     fig, axis = plt.subplots()
-    # TODO: I couldn't think of better variable name :(
+    
     for chunk in data:
         (x_list, y_list) = chunk["values"]
         label = chunk["label"]
