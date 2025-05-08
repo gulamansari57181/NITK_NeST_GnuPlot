@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-only
-# Copyright (c) 2019-2020 NITK Surathkal
+# Copyright (c) 2019-2025 NITK Surathkal
 
 """Package all results into a folder"""
 
@@ -96,7 +96,8 @@ class Pack:
 
         user_id = User.user_id
         group_id = User.group_id
-        os.chown(path, user_id, group_id)
+        if hasattr(os, "chown"):
+            os.chown(path, user_id, group_id)
 
     @staticmethod
     def compress():
@@ -148,3 +149,29 @@ class Pack:
         shutil.move(src_path, dst_path)
         filename = os.path.join(dst_path, os.path.basename(src_path))
         Pack.set_owner(filename)
+
+    @staticmethod
+    def dump_datfile(subfolder, filename_dat, data_frame):
+        """
+        Save Dataframe as dat file.
+        Parameters
+        ----------
+        subfolder : str
+        filename_dat : str
+        data_frame:pandas Dataframe
+        """
+        path_dat = os.path.join(Pack.FOLDER, subfolder, filename_dat)
+        data_frame.to_csv(path_dat, index=False, sep=" ", header=False)
+        Pack.set_owner(path_dat)
+
+    @staticmethod
+    def get_path(subfolder, filename):
+        """
+        To get file path
+        Parameters
+        ----------
+        subfolder : str
+        filename : str
+        """
+        path = os.path.join(Pack.FOLDER, subfolder, filename)
+        return path
