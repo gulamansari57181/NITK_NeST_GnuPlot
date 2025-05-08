@@ -15,6 +15,8 @@ from .common import simple_plot, mix_plot, simple_gnu_plot, mix_gnu_plot
 logger = logging.getLogger(__name__)
 
 # pylint: disable=too-many-branches
+
+
 def _get_list_of_ss_params():
     """
     Return list of params parsed by ss
